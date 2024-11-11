@@ -28,7 +28,7 @@ public class TokenService {
                 .retrieve()
                 .bodyToMono(Map.class)
                 .map(response -> {
-                    String token = (String) response.get("auth-vivelibre-token");
+                    String token = (String) response.get("token");
                     TokenResponse tokenResponse = new TokenResponse();
                     tokenResponse.setToken(token);
                     tokenResponse.setDate(new Date()); // Fecha actual
