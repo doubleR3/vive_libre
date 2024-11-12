@@ -33,27 +33,29 @@ public class TokenServiceTest {
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.openMocks(this);
-        // Configurar el comportamiento del WebClient.Builder
+
         when(webClientBuilder.baseUrl(anyString())).thenReturn(webClientBuilder);
         when(webClientBuilder.build()).thenReturn(webClient);
 
         // Inicializar TokenService con el mock de WebClient.Builder
-        service = new TokenService(webClientBuilder);
+        //service = new TokenService(webClientBuilder);
     }
 
     @Test
     public void testGetToken(){
         Map<String,String> response = new HashMap<>();
-        response.put("auth-vivelibre-token","tokenDePrueba");
+        response.put("token","tokenDePrueba");
+        response.put("date", String.valueOf(new Date()));
 
+        service = new TokenService(webClientBuilder);
         // Mockeamos el WebClient
         WebClient.RequestBodyUriSpec uriSpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
         WebClient.RequestHeadersSpec headersSpec = Mockito.mock(WebClient.RequestHeadersSpec.class);
         WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
 
         when(webClient.post()).thenReturn(uriSpec);
-        when(uriSpec.uri("/token")).thenReturn(uriSpec);
-        when(uriSpec.bodyValue(Mockito.any(Map.class))).thenReturn(headersSpec);
+        when(uriSpec.uri(Mockito.anyString())).thenReturn(uriSpec);
+        when(uriSpec.bodyValue(Mockito.any())).thenReturn(headersSpec);
         when(headersSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.bodyToMono(Map.class)).thenReturn(Mono.just(response));
 

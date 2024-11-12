@@ -34,9 +34,7 @@ class TokenControllerApplicationTests {
 
 		String token = "mocked-token";
 		Date mockDate = new Date();
-		TokenResponse mockedResponse = new TokenResponse();
-		mockedResponse.setToken(token);
-		mockedResponse.setDate(mockDate);
+		TokenResponse mockedResponse = new TokenResponse(token,mockDate);
 
 		when(tokenService.getToken()).thenReturn(Mono.just(mockedResponse));
 

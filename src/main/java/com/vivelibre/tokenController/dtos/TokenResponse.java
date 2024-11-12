@@ -10,6 +10,11 @@ import java.util.Date;
 @Setter
 public class TokenResponse {
 
+    public TokenResponse(String token, Date date) {
+        this.token = token;
+        this.date = date;
+    }
+
     @JsonProperty("auth-vivelibre-token")
     private String token;
 

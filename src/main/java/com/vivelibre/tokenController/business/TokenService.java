@@ -10,12 +10,12 @@ import java.util.Map;
 @Service
 public class TokenService {
 
+
     private final WebClient webClient;
 
     public TokenService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
     }
-
 
     public Mono<TokenResponse> getToken() {
         Map<String, String> requestBody = new HashMap<>();
@@ -27,12 +27,11 @@ public class TokenService {
                 .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(Map.class)
-                .map(response -> {
-                    String token = (String) response.get("token");
-                    TokenResponse tokenResponse = new TokenResponse();
-                    tokenResponse.setToken(token);
-                    tokenResponse.setDate(new Date()); // Fecha actual
-                    return tokenResponse;
+                .map(responseMap -> {
+                    // Convertimos el Map en un TokenResponse
+                    String token = (String) responseMap.get("token");
+                    Date date = new Date();  // Asignamos la fecha actual o la que necesites
+                    return new TokenResponse(token, date);
                 });
     }
 
